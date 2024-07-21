@@ -1,0 +1,53 @@
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        return f"{self.name} says Woof!"
+
+    def get_info(self):
+        return f"Dog's Name: {self.name}, Age: {self.age} years"
+
+class Cat:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def meow(self):
+        return f"{self.name} says Meow!"
+
+    def get_info(self):
+        return f"Cat's Name: {self.name}, Age: {self.age} years"
+
+class PetFactory:
+    @staticmethod
+    def create_pet(pet_type, name, age):
+        if pet_type == "dog":
+            return Dog(name, age)
+        elif pet_type == "cat":
+            return Cat(name, age)
+        else:
+            raise ValueError("Unknown pet type!")
+
+if __name__ == "__main__":
+    pets = []
+    number_of_pets = int(input("How many pets do you want to create? "))
+    
+    for _ in range(number_of_pets):
+        pet_type = input("Enter pet type (dog/cat): ").lower()
+        name = input("Enter pet name: ")
+        age = int(input("Enter pet age: "))
+        pet = PetFactory.create_pet(pet_type, name, age)
+        pets.append(pet)
+    
+    print("\nHere are your pets:")
+    for pet in pets:
+        if isinstance(pet, Dog):
+            print(pet.bark())
+        elif isinstance(pet, Cat):
+            print(pet.meow())
+        print(pet.get_info())
+
+    average_age = sum(pet.age for pet in pets) / len(pets) if pets else 0
+    print(f"\nAverage age of your pets: {average_age:.2f} years")
